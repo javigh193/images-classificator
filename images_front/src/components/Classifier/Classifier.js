@@ -46,10 +46,35 @@ class Classifier extends Component {
 
     }
 
+    activateSpinner = () => {
+        this.setState({isLoading:true})
+    }
+
+    deactivateSpinner = () => {
+        this.setState({isLoading:false})
+    }
+
     sendImageHandler = () => {
+        this.activateSpinner()
         let formData = new FormData()
         formData.append('picture', this.state.files[0], this.state.files[0].name)
         axios.post('http://127.0.0.1:8000/api/images/', formData, {
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'multipart/form-data'
+            }
+        })
+        .then(resp => {
+            this.getImageClass(resp)
+            console.log(resp.data.id)
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+    }
+
+    getImageClass = (obj) => {
+        axios.get(`http://127.0.0.1:8000/api/images/${obj.data.id}/`, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'multipart/form-data'
@@ -61,6 +86,7 @@ class Classifier extends Component {
         .catch((err) => {
             console.error(err)
         })
+        this.deactivateSpinner()
     }
 
     render() { 
