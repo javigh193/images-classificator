@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -124,3 +125,10 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_root')
 MEDIA_URL = '/media/'
+
+# Cors
+
+CORS_ORIGIN_WHITELIST = [
+    'http://127.0.0.1:3000',
+    'http://localhost:3000',
+]
