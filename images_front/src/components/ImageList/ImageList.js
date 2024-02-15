@@ -13,7 +13,7 @@ class ImageList extends Component {
      } 
 
     componentDidMount() {
-        setTimeout(this.getImages, 1500)
+        this.getImages()
     } 
 
     getImages = () => {
@@ -23,25 +23,24 @@ class ImageList extends Component {
             }
         })
         .then(resp => {
-            this.setState({images: resp.data})
-            console.log(resp)
+            this.setState({
+                images: resp.data,
+                isLoading: false,
+            })
         })
         .catch((err) => {
             console.error(err)
         })
-        this.setState({isLoading: false})
     }
 
     handleVisible = () => {
         let visible = this.state.visible
         let new_visible = visible + 2
         this.setState({loadingMore: true})
-        setTimeout(() => {
-            this.setState({
+        this.setState({
                 visible: new_visible,
                 loadingMore: false,
             })
-        }, 300);
     }
 
     render() {

@@ -21,15 +21,10 @@ class Classifier extends Component {
     }
 
     loadImage = (files) => {
-        setTimeout(() => {
-            this.setState({
-                files,
-                isLoading: false
-            }, () => {
-                console.log(this.state.files)
+        this.setState({
+            files,
+            isLoading: false
             })
-        }, 1000);
-
     }
 
     activateSpinner = () => {
@@ -55,7 +50,6 @@ class Classifier extends Component {
         })
         .then(resp => {
             this.getImageClass(resp)
-            console.log(resp.data.id)
         })
         .catch((err) => {
             console.error(err)
@@ -81,9 +75,9 @@ class Classifier extends Component {
 
     render() { 
         const files = this.state.files.map(file => (
-            <li key={file.name}>
+            <p key={file.name}>
                 {file.name} - {file.size} bytes
-            </li>
+            </p>
         ));
         return (
             <Dropzone onDrop={this.onDrop} className='App'>
