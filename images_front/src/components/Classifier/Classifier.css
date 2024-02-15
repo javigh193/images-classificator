@@ -1,3 +1,7 @@
+*{
+    text-align: center;
+}
+
 .back {
     background: #f8f8f8;
     border: 3px dashed #f0f0f0;
@@ -12,3 +16,4 @@
 .back:hover{
     border: 3px dashed deepskyblue;
 }
+

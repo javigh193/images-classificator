@@ -1,35 +1,21 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import './Classifier.css';
-import { Button, Spinner } from 'react-bootstrap';
+import { Alert, Button, Spinner, Image } from 'react-bootstrap';
 import axios from 'axios';
 
 class Classifier extends Component {
     state = {
         files: [],
         isLoading: false,
+        recentImage: null,
     }
-
-    // componentDidMount() {
-    //     this.getImages()
-    // } 
-    // getImages = () => {
-    //     axios.get('http://127.0.0.1:8000/api/images/', {
-    //         headers: {
-    //             'accept': 'application/json'
-    //         }
-    //     })
-    //     .then(resp => {
-    //         console.log(resp)
-    //     })
-    //     .catch((err) => {
-    //         console.error(err)
-    //     })
-    // }
 
     onDrop = (files) => {
         this.setState({
+            files: [],
             isLoading: true,
+            recentImage: null,
         })
         this.loadImage(files)
     }
@@ -47,7 +33,10 @@ class Classifier extends Component {
     }
 
     activateSpinner = () => {
-        this.setState({isLoading:true})
+        this.setState({
+            files: [],
+            isLoading:true
+        })
     }
 
     deactivateSpinner = () => {
@@ -81,6 +70,7 @@ class Classifier extends Component {
             }
         })
         .then(resp => {
+            this.setState({ recentImage: resp })
             console.log(resp)
         })
         .catch((err) => {
@@ -96,7 +86,7 @@ class Classifier extends Component {
             </li>
         ));
         return (
-            <Dropzone onDrop={this.onDrop} >
+            <Dropzone onDrop={this.onDrop} className='App'>
                 {({isDragActive, getRootProps, getInputProps}) => (
                 <section className="container">
                     <div {...getRootProps({className: 'dropzone back'})}>
@@ -113,6 +103,18 @@ class Classifier extends Component {
                         <Spinner animation="border" role="status">
                             <span className="visually-hidden">Loading...</span>
                         </Spinner>
+                    }
+                    {this.state.recentImage &&
+                    <>
+                        <Alert variant='primary'>
+                            {this.state.recentImage.data.classified}
+                        </Alert>
+                        <Image className='justify-content-center'
+                            src={this.state.recentImage.data.picture}
+                            height='200'
+                            rounded
+                        />
+                    </>
                     }
                 </section>
                 )}
