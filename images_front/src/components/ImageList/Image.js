@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
+//Con la información obtenida a través de props, se construye una card 
 const Image = (props) => {
     return ( 
         <Card style={{ width: '30rem' }} className='mx-auto mb-2'>

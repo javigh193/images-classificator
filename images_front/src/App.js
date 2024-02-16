@@ -3,6 +3,9 @@ import ImageList from './components/ImageList/ImageList';
 import Navigation from './components/Navigation/Navigation';
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 
+//según la url, se renderizan unos componentes u otros
+//en caso de emplear una url no definida, se direcciona al home
+
 function App() {
   return (
       <BrowserRouter>
