@@ -36,11 +36,14 @@ class ImageList extends Component {
     handleVisible = () => {
         let visible = this.state.visible
         let new_visible = visible + 2
-        this.setState({loadingMore: true})
         this.setState({
-                visible: new_visible,
-                loadingMore: false,
-            })
+            loadingMore: true,
+            visible: new_visible,
+        })
+        // Aquí se debería comprobar que las imágenes están listas para ser mostradas
+        this.setState({
+            loadingMore: false,
+        })
     }
 
     render() {

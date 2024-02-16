@@ -24,9 +24,9 @@ class Image(models.Model):
             preprocessed_img = preprocess_input(to_predict)
             model = InceptionResNetV2(weights='imagenet')
             prediction = model.predict(preprocessed_img)
+            print(decode_predictions(prediction))
             decoded = decode_predictions(prediction)[0][0][1]
             self.classified = str(decoded)
-            print(decoded, 'success')
         except Exception as e:
             print('something went wrong', e)
         super().save(*args, **kwargs)

@@ -65,7 +65,6 @@ class Classifier extends Component {
         })
         .then(resp => {
             this.setState({ recentImage: resp })
-            console.log(resp)
         })
         .catch((err) => {
             console.error(err)
@@ -74,7 +73,7 @@ class Classifier extends Component {
     }
 
     render() { 
-        const files = this.state.files.map(file => (
+        let files = this.state.files.map(file => (
             <p key={file.name}>
                 {file.name} - {file.size} bytes
             </p>
@@ -91,7 +90,7 @@ class Classifier extends Component {
                         {files}
                     </aside>
                     {this.state.files.length > 0 &&
-                        <Button variant='info' size='lg' className='mt-3' onClick={this.sendImageHandler}>Select Image</Button>
+                        <Button variant='info' size='lg' className='mt-3' onClick={this.sendImageHandler}>Save Image</Button>
                     }
                     {this.state.isLoading &&
                         <Spinner animation="border" role="status">
