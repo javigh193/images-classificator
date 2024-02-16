@@ -1,5 +1,7 @@
 # Proyecto de introducción a REACT para DEW 2DAW
 
+## Repositorio: https://github.com/javigh193/images-classificator
+
 ### Javier García Hernández && Nuhazet Correa Torres
 
 ## Descripción de la aplicación
