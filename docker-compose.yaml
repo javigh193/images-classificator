@@ -1,0 +1,16 @@
+services:
+  images_backend:
+    build: ./images_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./images_backend:/images_backend
+      - ./media_root:/media_root
+    command: bash -c "python manage.py runserver 0.0.0.0:8000"
+
+  images_frontend:
+    build: ./images_front
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./images_front:/images_front
