@@ -4,13 +4,19 @@ import './Classifier.css';
 import { Alert, Button, Spinner, Image } from 'react-bootstrap';
 import axios from 'axios';
 
+//el clasificador es el componente encargado de recibir las imagenes del usuario
+//y enviarlas al backend para que realice la clasificación y las guarde
 class Classifier extends Component {
     state = {
+        //las imagenes cargadas para ser clasificadas
         files: [],
+        //el componente está preparando algún elemento para renderizarlo
         isLoading: false,
+        //se cargó una imagen recientemente
         recentImage: null,
     }
 
+    //evento al soltar una imagen en la zona habilitada para ello
     onDrop = (files) => {
         this.setState({
             files: [],
@@ -20,6 +26,7 @@ class Classifier extends Component {
         this.loadImage(files)
     }
 
+    //incluye la imagen en el estado del componente
     loadImage = (files) => {
         this.setState({
             files,
@@ -27,6 +34,8 @@ class Classifier extends Component {
             })
     }
 
+    //cuando se está esperando por algún elemento se activa un spinner para
+    //que el usuario tenga una referencia visual
     activateSpinner = () => {
         this.setState({
             files: [],
@@ -38,6 +47,10 @@ class Classifier extends Component {
         this.setState({isLoading:false})
     }
 
+    //función asociada al botón de guardar imagen
+    //envía la imagen al backend para que la clasifique y la guarde en la base de datos
+    //axios permite trabajar de manera análoga a fetch, pero de manera más eficiente con 
+    //el compromiso de trabajar en json
     sendImageHandler = () => {
         this.activateSpinner()
         let formData = new FormData()
@@ -49,6 +62,7 @@ class Classifier extends Component {
             }
         })
         .then(resp => {
+            //solicitud de la imagen ya clasificada
             this.getImageClass(resp)
         })
         .catch((err) => {
@@ -56,6 +70,7 @@ class Classifier extends Component {
         })
     }
 
+    //una vez la imagen ha sido clasificada, se la solicitamos al backend
     getImageClass = (obj) => {
         axios.get(`http://127.0.0.1:8000/api/images/${obj.data.id}/`, {
             headers: {
@@ -64,6 +79,7 @@ class Classifier extends Component {
             }
         })
         .then(resp => {
+            //la imagen pasa a ser la guardada recientemente, se muestra
             this.setState({ recentImage: resp })
         })
         .catch((err) => {
@@ -72,6 +88,10 @@ class Classifier extends Component {
         this.deactivateSpinner()
     }
 
+    //La información mostrada depende del estado del flujo de procesamiento de imágenes
+    //los botones solo aparecen cuando se dan las condiciones para poder ejecutar las funciones
+    //asociadas a los mismos, se emplean spinners para indicar que hay procesos en curso.
+    //Solo se muestra una imagen al mismo tiempo, la última en ser clasificada en esta sesión.
     render() { 
         let files = this.state.files.map(file => (
             <p key={file.name}>

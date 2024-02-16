@@ -1,4 +1,4 @@
-FROM python:3.7.17
+FROM python:3.7.16
 ENV PYTHONUNBUFFERED=1
 WORKDIR /images_backend
 COPY requirements.txt /images_backend/
